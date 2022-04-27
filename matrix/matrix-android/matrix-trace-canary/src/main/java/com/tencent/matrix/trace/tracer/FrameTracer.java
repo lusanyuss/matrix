@@ -342,6 +342,11 @@ public class FrameTracer extends Tracer implements Application.ActivityLifecycle
         }
     }
 
+    /**
+     * 我们将掉帧数划分出几个区间进行定级，掉帧数小于 3 帧的情况属于最佳，依次类推，见下表：
+     * Best	Normal	Middle	High	Frozen
+     * [0:3)	[3:9)	[9:24)	[24:42)	[42:∞)
+     */
     public enum DropStatus {
         DROPPED_FROZEN(4), DROPPED_HIGH(3), DROPPED_MIDDLE(2), DROPPED_NORMAL(1), DROPPED_BEST(0);
         public int index;

@@ -96,7 +96,7 @@ android {
                     println process.errorStream.text
                     File outputFile = new File(project.getProjectDir().getAbsolutePath() + "/unused_resources.json");
                     if (outputFile.exists()) {
-                        Gson gson = new Gson();
+                        Gson gson = new Gson()
                         JsonArray jsonArray = gson.fromJson(outputFile.text, JsonArray.class);
                         for (int i = 0; i < jsonArray.size(); i++) {
                             if (jsonArray.get(i).asJsonObject.get("taskType").asInt == 12) {

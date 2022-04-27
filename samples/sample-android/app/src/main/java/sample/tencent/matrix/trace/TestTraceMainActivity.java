@@ -120,7 +120,9 @@ public class TestTraceMainActivity extends Activity implements IAppForeground {
     }
 
     public void testFps(View view) {
-        Intent intent = new Intent(this, TestFpsActivity.class);
+        Intent intent;
+        intent = new Intent(this,
+                TestFpsActivity.class);
         startActivity(intent);
     }
 

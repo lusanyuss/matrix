@@ -64,7 +64,7 @@ public class TestPluginListener extends DefaultPluginListener {
             }
         });
 
-        jumpToIssueActivity();
+//        jumpToIssueActivity();
     }
 
     private void showToast(Issue issue) {
