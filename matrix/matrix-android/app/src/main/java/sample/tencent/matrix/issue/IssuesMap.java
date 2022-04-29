@@ -24,7 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class IssuesMap {
 
+    //分类的问题
     private static final ConcurrentHashMap<String, List<Issue>> issues = new ConcurrentHashMap<>();
+    //所有的问题
     private static final ArrayList<Issue> allIssues = new ArrayList<>();
 
     public static void put(@IssueFilter.FILTER String filter, Issue issue) {

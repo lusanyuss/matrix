@@ -55,8 +55,8 @@ public class TestFpsActivity extends Activity {
     private FrameTracer frameTracerVar;
 
 
-
     private static HandlerThread sHandlerThread = new HandlerThread("test");
+
     static {
         sHandlerThread.start();
     }
@@ -65,6 +65,7 @@ public class TestFpsActivity extends Activity {
     private long time = System.currentTimeMillis();
     private Executor mExecutor = new Executor() {
         Handler handler = new Handler(sHandlerThread.getLooper());
+
         @Override
         public void execute(Runnable command) {
             handler.post(command);
@@ -91,6 +92,7 @@ public class TestFpsActivity extends Activity {
         frameTracerVar.onStartTrace();
         frameTracerVar.addListener(mDoFrameListener);
 
+
         time = System.currentTimeMillis();
         mListView = (ListView) findViewById(R.id.list_view);
         String[] data = new String[200];
@@ -101,7 +103,7 @@ public class TestFpsActivity extends Activity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 //                MatrixLog.i(TAG, "onTouch=" + motionEvent);
-//                SystemClock.sleep(80);
+                SystemClock.sleep(80);
                 return false;
             }
         });
