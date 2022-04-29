@@ -24,10 +24,4 @@ dependencies {
 }
 
 
-version = rootProject.ext.VERSION_NAME
-group = rootProject.ext.GROUP
-def artifactId = POM_ARTIFACT_ID
-println(version)
-println(group)
-println(artifactId)
 apply from: rootProject.file('gradle/yuliu-publish.gradle')
