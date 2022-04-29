@@ -4,34 +4,25 @@ apply plugin: 'kotlin'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation gradleApi()
-    implementation project(':matrix-commons')
+//    implementation project(':matrix-commons')
+    implementation 'commons-io:commons-io:2.6'
     implementation group: 'org.ow2.asm', name: 'asm', version: '7.0'
     implementation group: 'org.ow2.asm', name: 'asm-commons', version: '7.0'
     implementation 'com.android.tools.build:gradle:4.0.0'
-    implementation project(':matrix-arscutil')
+//    implementation project(':matrix-arscutil')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN_VERSION}"
 }
 sourceSets {
     main {
         java {
-            srcDir "../matrix-gradle-plugin/src/main/java"
+            srcDir "main/java"
         }
-
+        kotlin {
+            srcDir "main/kotlin"
+        }
         resources {
-            srcDir '../matrix-gradle-plugin/src/main/resources'
+            srcDir 'main/resources'
         }
     }
 }
-
-version rootProject.ext.VERSION_NAME
-group rootProject.ext.GROUP
-
-if("External" == rootProject.ext.PUBLISH_CHANNEL) {
-    apply from: rootProject.file('gradle/java-publish.gradle')
-}
-else {
-    apply from: rootProject.file('gradle/WeChatPublish.gradle')
-    wechatPublish {
-        artifactId = POM_ARTIFACT_ID
-    }
-}
+apply from: rootProject.file('gradle/yuliu-publish.gradle')
