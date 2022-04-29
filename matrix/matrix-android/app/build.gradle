@@ -2,15 +2,14 @@ apply plugin: 'com.google.osdetector'
 
 ext.removeUnusedResourcesV2Enable = true
 
+
 import com.google.gson.Gson
 import com.google.gson.JsonArray
-
 import com.tencent.matrix.plugin.compat.AgpCompat
 
 apply plugin: 'com.android.application'
 
 configurations.all {
-    // check for updates every build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
@@ -69,7 +68,7 @@ android {
     sourceSets {
         main {
             jniLibs {
-                setSrcDirs (['./libs'] as Set)
+                setSrcDirs(['./libs'] as Set)
             }
         }
 
@@ -119,11 +118,39 @@ configurations {
     sevenZipDependency
 }
 
-//if (useLocalMaven()) {
-    apply from: project.file('dependencies-src.gradle')
-//} else {
-//    apply from: project.file('dependencies-aar.gradle')
-//}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    def matrixModules = [
+            "matrix-commons",
+            "matrix-battery-canary",
+            "matrix-android-lib",
+            "matrix-android-commons",
+            "matrix-trace-canary",
+            'matrix-resource-canary:matrix-resource-canary-android',
+            'matrix-resource-canary:matrix-resource-canary-common',
+            "matrix-io-canary",
+            'matrix-sqlite-lint:matrix-sqlite-lint-android-sdk',
+            "matrix-hooks",
+            "matrix-fd",
+            "matrix-jectl",
+            "matrix-backtrace",
+            "matrix-traffic",
+    ]
+
+    matrixModules.each { moduleName ->
+        implementation project(":${moduleName}")
+    }
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    apkCheckerDependency("com.tencent.matrix:matrix-apk-canary:2.0.5.1")
+    sevenZipDependency('com.tencent.mm:SevenZip:1.2.17') {
+        artifact {
+            name = "SevenZip"
+            type = 'exe'
+        }
+    }
+}
+
 
 if (!removeUnusedResourcesV2Enable) {
     project.ext.unusedResourcesSet = new HashSet<String>()

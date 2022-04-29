@@ -24,7 +24,7 @@
 
             <TextView
                 style="@style/DescText"
-                android:text="Provide multiple functions like FPS monitor/ANR Catch/Method Tracing and other gadgets to detect some specific problems." />
+                android:text="提供多种功能，如 FPS monitorANR CatchMethod Tracing 和其他小工具来检测一些特定的问题。" />
 
             <View style="@style/Divider" />
 
@@ -37,7 +37,7 @@
 
             <TextView
                 style="@style/DescText"
-                android:text="Test Resource canary need Enter and exit the page a few seconds later to get the issue result\nPS:Will only be published once, if you need to publish again, you need to restart the app." />
+                android:text="测试资源canary需要几秒后进入退出页面才能得到issue结果\nPS：只会发布一次，如果需要再次发布需要重启app" />
 
             <View style="@style/Divider" />
 
@@ -50,7 +50,7 @@
 
             <TextView
                 style="@style/DescText"
-                android:text="Include allocation hooks, pthread creation hooks and some other hack tools to mitigate 32 bit virtual memory address insufficiency." />
+                android:text="包括分配挂钩、pthread 创建挂钩和其他一些黑客工具，以缓解 32 位虚拟内存地址不足。" />
 
             <View style="@style/Divider" />
 
@@ -63,7 +63,7 @@
 
             <TextView
                 style="@style/DescText"
-                android:text="Battery Canary detects abnormal usage of thread jiffies." />
+                android:text="Battery Canary 检测线程 jiffies 的异常使用。" />
 
             <View style="@style/Divider" />
 
