@@ -45,7 +45,6 @@ public class MethodCollector {
 
 
     private final ConcurrentHashMap<String, String> collectedClassExtendMap = new ConcurrentHashMap<>();
-
     private final ConcurrentHashMap<String, TraceMethod> collectedIgnoreMethodMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, TraceMethod> collectedMethodMap;
     private final Configuration configuration;
