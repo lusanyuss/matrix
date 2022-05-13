@@ -165,9 +165,13 @@ def handleAndroidApplication() {
 }
 
 def handleAndroidLibrary() {
+    //安装扩展
     mountExtension()
+    //注入本地依赖路径
     injectNativeDependenciesPath()
+    //注入构建信息模块
     injectBuildInfoModule()
+    //生成构建信息header
     generateBuildInfoHeader(true)
 
     def libVariants = project.android.libraryVariants
@@ -334,16 +338,17 @@ def injectNativeDependenciesPath() {
     cmakeOpt.getArguments().add('-DEXT_DEP=' + extractedNativeDepsDir.absolutePath)
 }
 
+//build-info.h生成
 def generateBuildInfoHeader(boolean stubOnly) {
-    def hasBuildRevision = project.hasProperty('WX_BUILD_REVISION')
-    def hasBuildBranch = project.hasProperty('WX_BUILD_BRANCH')
-    def hasBuildTime = project.hasProperty('WX_BUILD_TIME')
-    def hasBuildJob = project.hasProperty('WX_BUILD_JOB')
+    def hasBuildRevision = project.hasProperty('WX_BUILD_REVISION')//修订版本
+    def hasBuildBranch = project.hasProperty('WX_BUILD_BRANCH')//分支
+    def hasBuildTime = project.hasProperty('WX_BUILD_TIME')//时间
+    def hasBuildJob = project.hasProperty('WX_BUILD_JOB')//岗位
     def hasBuildVersion = project.extensions.findByName('wechatPublish') != null
 
     def extractedNativeDepsDir = getExtractedNativeDependenciesDir()
-    def exportedHeadersDir = new File(extractedNativeDepsDir, HEADERS_DIR_NAME)
-    def buildInfoHeaderDir = new File(exportedHeadersDir, 'build-info')
+    def exportedHeadersDir = new File(extractedNativeDepsDir, HEADERS_DIR_NAME)//include目录
+    def buildInfoHeaderDir = new File(exportedHeadersDir, 'build-info')//build-info目录
     if (!buildInfoHeaderDir.exists()) {
         buildInfoHeaderDir.mkdirs()
     }
