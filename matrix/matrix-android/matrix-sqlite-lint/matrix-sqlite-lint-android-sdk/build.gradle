@@ -33,9 +33,9 @@ android {
         full {
             jni.srcDirs = ['cpp']
         }
-        stub {
-            jniLibs.srcDirs = []
-        }
+//        stub {
+//            jniLibs.srcDirs = []
+//        }
     }
     externalNativeBuild {
         cmake {
@@ -50,10 +50,10 @@ android {
             dimension 'mode'
         }
 
-        stub {
-            dimension 'mode'
-            ext.artifactIdSuffix = 'no-op'
-        }
+//        stub {
+//            dimension 'mode'
+//            ext.artifactIdSuffix = 'no-op'
+//        }
     }
 
     lintOptions {
@@ -63,9 +63,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.annotation:annotation:1.0.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
     implementation project(':matrix-android-lib')
     implementation project(':matrix-android-commons')
@@ -74,10 +71,9 @@ dependencies {
 version = rootProject.ext.VERSION_NAME
 group = rootProject.ext.GROUP
 
-if("External" == rootProject.ext.PUBLISH_CHANNEL) {
+if ("External" == rootProject.ext.PUBLISH_CHANNEL) {
     apply from: rootProject.file('gradle/android-publish.gradle')
-}
-else {
+} else {
     apply from: rootProject.file('gradle/WeChatPublish.gradle')
     wechatPublish {
         artifactId = POM_ARTIFACT_ID

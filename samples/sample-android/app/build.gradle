@@ -16,7 +16,6 @@ configurations.all {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
 
     signingConfigs {
         debug {
@@ -97,7 +96,7 @@ android {
                     println process.errorStream.text
                     File outputFile = new File(project.getProjectDir().getAbsolutePath() + "/unused_resources.json");
                     if (outputFile.exists()) {
-                        Gson gson = new Gson();
+                        Gson gson = new Gson()
                         JsonArray jsonArray = gson.fromJson(outputFile.text, JsonArray.class);
                         for (int i = 0; i < jsonArray.size(); i++) {
                             if (jsonArray.get(i).asJsonObject.get("taskType").asInt == 12) {
@@ -152,7 +151,7 @@ matrix {
             unusedResources = project.ext.unusedResourcesSet
         }
 
-        enable false
+        enable true
         needSign true
         shrinkArsc true
         shrinkDuplicates true
@@ -164,8 +163,8 @@ matrix {
         sevenZipPath = "${project.configurations.sevenZipDependency.resolve().getAt(0).getAbsolutePath()}"
         //Notice: You need to modify the  value of $apksignerPath on different platform. the value below only suitable for Mac Platform,
         //if on Windows, you may have to  replace apksigner with apksigner.bat.
-        apksignerPath = "${android.getSdkDirectory().getAbsolutePath()}/build-tools/${android.getBuildToolsVersion()}/apksigner"
-        zipAlignPath = "${android.getSdkDirectory().getAbsolutePath()}/build-tools/${android.getBuildToolsVersion()}/zipalign"
+        apksignerPath = "${android.getSdkDirectory().getAbsolutePath()}/build-tools/${android.getBuildToolsVersion()}/apksigner.bat"
+        zipAlignPath = "${android.getSdkDirectory().getAbsolutePath()}/build-tools/${android.getBuildToolsVersion()}/zipalign.exe"
         ignoreResources = ["R.id.*", "R.bool.*", "R.layout.unused_layout"]
     }
 }

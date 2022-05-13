@@ -1,38 +1,120 @@
 buildscript {
 
-    repositories {
+    ext {
+        // For android sub-projects
+        minSdkVersion = 19
+        targetSdkVersion = 29
+        compileSdkVersion = 29
+        buildToolsVersion = '29.0.2'
 
-        mavenLocal()
-        google()
-        mavenCentral()
+        MIN_SDK_VERSION_FOR_HOOK = 21
 
+        VERSION_CODE = 1
+
+        javaVersion = JavaVersion.VERSION_1_8
+
+        GROUP = 'com.tencent.matrix'
+        VERSION_NAME = "${VERSION_NAME_PREFIX}${VERSION_NAME_SUFFIX}"
+        PUBLISH_CHANNEL = "${PUBLISH_CHANNEL}"
+
+        POM_PACKAGING = "pom"
+        POM_NAME = "Matrix for Android"
+        POM_DESCRIPTION = "Matrix is an APM (Application Performance Manage) used in Wechat to monitor, locate and analyse performance problems. It is a plugin style, non-invasive solution and is currently available on iOS, macOS and Android."
+
+        POM_URL = "https://github.com/Tencent/Matrix"
+        POM_SCM_URL = "https://github.com/Tencent/Matrix.git"
+        POM_SCM_COMMIT = ""
+        POM_ISSUE_URL = 'https://github.com/Tencent/Matrix/issues'
+
+        POM_LICENCE_NAME = "BSD License"
+        POM_LICENCE_URL = "https://opensource.org/licenses/BSD-3-Clause"
+        POM_LICENCE_DIST = "repo"
+
+        POM_DEVELOPER_ID = "Tencent Wechat"
+        POM_DEVELOPER_NAME = "Tencent Wechat, Inc."
+
+        BINTRAY_LICENCE = ['BSD 3-Clause']
+        BINTRAY_ORGANIZATION = "matrix"
+
+        ABI_FILTERS = ['armeabi-v7a', 'arm64-v8a']
+        LOGGER_VERSION = 1.1
+        KOTLIN_VERSION = "1.3.72"
     }
 
-    gradle.ext.KOTLIN_VERSION = "1.3.72"
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-release-LFshLE/'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-snapshot-w7PgoE/'
+        }
+    }
+
 
     dependencies {
         // classpath
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath 'digital.wup:android-maven-publish:3.6.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$gradle.KOTLIN_VERSION"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
+        classpath "com.tencent.matrix:matrix-gradle-plugin:2.0.5.1"
+
+        classpath 'com.google.code.gson:gson:2.7'
+        classpath  'com.google.gradle:osdetector-gradle-plugin:1.6.0'
+
     }
 
 }
 
 Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 def SigningFromLocalProperties(properties, project, String prop) {
     if (properties.getProperty(prop)) {
         project.ext[prop] = properties.getProperty(prop)
     }
 }
+
+
 allprojects {
     repositories {
-
         mavenLocal()
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-release-LFshLE/'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-snapshot-w7PgoE/'
+        }
     }
+
 
     tasks.withType(Javadoc).all {
         enabled = false // TODO:
@@ -44,49 +126,8 @@ allprojects {
     SigningFromLocalProperties(localProperties, project, 'signing.keyId' as String)
     SigningFromLocalProperties(localProperties, project, 'signing.password' as String)
     SigningFromLocalProperties(localProperties, project, 'signing.secretKeyRingFile' as String)
-
 }
 
-
-ext {
-    // For android sub-projects
-    minSdkVersion = 19
-    targetSdkVersion = 29
-    compileSdkVersion = 29
-    buildToolsVersion = '29.0.2'
-
-    MIN_SDK_VERSION_FOR_HOOK = 21
-
-    VERSION_CODE = 1
-
-    javaVersion = JavaVersion.VERSION_1_8
-
-    GROUP = 'com.tencent.matrix'
-    VERSION_NAME = "${VERSION_NAME_PREFIX}${VERSION_NAME_SUFFIX}"
-    PUBLISH_CHANNEL = "${PUBLISH_CHANNEL}"
-
-    POM_PACKAGING = "pom"
-    POM_NAME = "Matrix for Android"
-    POM_DESCRIPTION = "Matrix is an APM (Application Performance Manage) used in Wechat to monitor, locate and analyse performance problems. It is a plugin style, non-invasive solution and is currently available on iOS, macOS and Android."
-
-    POM_URL = "https://github.com/Tencent/Matrix"
-    POM_SCM_URL = "https://github.com/Tencent/Matrix.git"
-    POM_SCM_COMMIT = ""
-    POM_ISSUE_URL = 'https://github.com/Tencent/Matrix/issues'
-
-    POM_LICENCE_NAME = "BSD License"
-    POM_LICENCE_URL = "https://opensource.org/licenses/BSD-3-Clause"
-    POM_LICENCE_DIST = "repo"
-
-    POM_DEVELOPER_ID = "Tencent Wechat"
-    POM_DEVELOPER_NAME = "Tencent Wechat, Inc."
-
-    BINTRAY_LICENCE = ['BSD 3-Clause']
-    BINTRAY_ORGANIZATION = "matrix"
-
-    ABI_FILTERS = ['armeabi-v7a', 'arm64-v8a']
-    LOGGER_VERSION = 1.1 // fixme logger
-}
 
 // Build sample project
 // TODO: Failed on Linux jenkins node, to be fixed later

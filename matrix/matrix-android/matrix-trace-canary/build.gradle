@@ -62,11 +62,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    androidTestImplementation 'androidx.annotation:annotation:1.0.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-
-    testImplementation 'junit:junit:4.12'
     implementation project(':matrix-android-lib')
     implementation project(':matrix-android-commons')
 }
