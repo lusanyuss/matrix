@@ -39,7 +39,9 @@ def getRepositoryUsername() {
 def getRepositoryPassword() {
     return hasProperty('REPOSITORY_PASSWORD') ? REPOSITORY_PASSWORD : readPropertyFromLocalProperties('REPOSITORY_PASSWORD')
 }
-
+/**
+ * pom额外配置
+ */
 def pomConfig = {
     scm {
         url POM_SCM_URL
@@ -71,6 +73,7 @@ android.libraryVariants.all { variant ->
         return
     }
 
+    //release版本
     def hasFlavors = !variant.flavorName.isEmpty()
 
     def artifactIdSuffix = hasFlavors ? variant.flavorName.replace('_', '-').capitalize() : ''

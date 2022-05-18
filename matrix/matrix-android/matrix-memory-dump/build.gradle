@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$gradle.KOTLIN_VERSION"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
     implementation project(':matrix-android-lib')
     implementation project(':matrix-android-commons')
     implementation project(':matrix-backtrace')

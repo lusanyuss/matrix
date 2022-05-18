@@ -20,7 +20,7 @@ buildscript {
          *
          # Or see `testBuildAndroid` in `.circleci/config.yaml`.
          */
-        compileMatrixWithSrc = false
+        compileMatrixWithSrc = true
 
         useLocalMaven = {
             return compileMatrixWithSrc ?: properties?.compileWithSrc ?: false
@@ -35,8 +35,26 @@ buildscript {
 
     repositories {
         mavenLocal()
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-release-LFshLE/'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-snapshot-w7PgoE/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
@@ -52,8 +70,26 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        mavenCentral()
-        google()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-release-LFshLE/'
+        }
+        maven {
+            credentials {
+                username '626bdb89606fff01d45ef819'
+                password 'Z2-m6AzWbAg_'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2223477-snapshot-w7PgoE/'
+        }
     }
 }
 

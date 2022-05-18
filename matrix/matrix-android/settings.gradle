@@ -1,3 +1,4 @@
+logger.quiet "1.settings.gradle-start"
 apply from: "$rootDir/gradle/Arguments.gradle"
 
 // Gradle plugin
@@ -39,3 +40,69 @@ if (gradle.staticLinkCXX()) {
     include ':matrix-opengl-leak:cxx-static'
     include ':matrix-backtrace:cxx-static'
 }
+
+
+gradle.addProjectEvaluationListener(new ProjectEvaluationListener() {
+    @Override
+    void beforeEvaluate(Project project) {
+        logger.quiet project.name+" beforeEvaluate"
+    }
+
+    @Override
+    void afterEvaluate(Project project, ProjectState state) {
+        logger.quiet project.name+" afterEvaluate"
+    }
+})
+
+gradle.addBuildListener(new BuildListener() {
+    @Override
+    void buildStarted(Gradle gradle) {
+        logger.quiet "buildStarted"
+    }
+
+    @Override
+    void settingsEvaluated(Settings settings) {
+        logger.quiet "3.settingsEvaluated"
+    }
+
+    @Override
+    void projectsLoaded(Gradle gradle) {
+        logger.quiet "4.projectsLoaded"
+    }
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {
+        logger.quiet "5.projectsEvaluated"
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        logger.quiet "6.buildFinished"
+    }
+})
+
+gradle.taskGraph.whenReady {
+    logger.quiet "生成taskGraph依赖图谱,顺序执行各个任务"
+}
+
+gradle.taskGraph.addTaskExecutionListener(new TaskExecutionListener() {
+    @Override
+    void beforeExecute(Task task) {
+
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState state) {
+
+    }
+})
+
+gradle.taskGraph.beforeTask {
+    if(it.name.contains('Classpath')){
+        logger.quiet "==========${it.project}-->${it.name}执行前的回调"
+    }
+}
+
+
+
+logger.quiet "2.settings.gradle-end"

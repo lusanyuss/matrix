@@ -86,7 +86,7 @@ public class TestFpsActivity extends Activity {
 
         IssueFilter.setCurrentFilter(IssueFilter.ISSUE_TRACE);
 
-        Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().onStartTrace();
+//        Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().onStartTrace();
         Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().addListener(mDoFrameListener);
 
         time = System.currentTimeMillis();
@@ -127,6 +127,6 @@ public class TestFpsActivity extends Activity {
         super.onDestroy();
         MatrixLog.i(TAG, "[onDestroy] count:" + count + " time:" + (System.currentTimeMillis() - time) + "");
         Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().removeListener(mDoFrameListener);
-        Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().onCloseTrace();
+//        Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().onCloseTrace();
     }
 }

@@ -79,6 +79,7 @@ ADD_LIBRARY(
         ${SOURCE_FILES}
         )
 
+#添加一个子目录并构建该子目录,目录包含CMakeLists.txt文件和代码文件
 ADD_SUBDIRECTORY(
         ${SOURCE_DIR}/external/libunwindstack
 )
