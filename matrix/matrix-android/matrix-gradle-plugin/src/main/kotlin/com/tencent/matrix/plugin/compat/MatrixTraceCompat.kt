@@ -70,7 +70,7 @@ class MatrixTraceCompat : ITraceSwitchListener {
             if (!extension.isEnable) {
                 return@afterEvaluate
             }
-
+            // todo yuliu:  变体工件
             appExtension.applicationVariants.all {
                 MatrixTraceLegacyTransform.inject(extension, project, it)
             }

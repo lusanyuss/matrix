@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/Container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            tools:ignore="HardcodedText">
+
+            <Button
+                android:id="@+id/test_trace"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trace Canary" />
+
+            <TextView
+                style="@style/DescText"
+                android:text="提供多种功能，如 FPS monitorANR CatchMethod Tracing 和其他小工具来检测一些特定的问题。" />
+
+            <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/test_leak"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resource Canary" />
+
+            <TextView
+                style="@style/DescText"
+                android:text="测试资源canary需要几秒后进入退出页面才能得到issue结果\nPS：只会发布一次，如果需要再次发布需要重启app" />
+
+            <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/test_hooks"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Matrix Hooks" />
+
+            <TextView
+                style="@style/DescText"
+                android:text="包括分配挂钩、pthread 创建挂钩和其他一些黑客工具，以缓解 32 位虚拟内存地址不足。" />
+
+            <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/test_battery"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Battery Canary" />
+
+            <TextView
+                style="@style/DescText"
+                android:text="Battery Canary 检测线程 jiffies 的异常使用。" />
+
+            <View style="@style/Divider" />
+
+            <Button
+                android:id="@+id/test_io"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="IO Canary" />
+
+            <Button
+                android:id="@+id/test_sqlite_lint"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SQLite Lint" />
+
+            <Button
+                android:id="@+id/test_traffic_enter"
+                style="@style/EntryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Network Traffic" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

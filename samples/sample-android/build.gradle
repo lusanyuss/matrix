@@ -20,7 +20,7 @@ buildscript {
          *
          # Or see `testBuildAndroid` in `.circleci/config.yaml`.
          */
-        compileMatrixWithSrc = true
+        compileMatrixWithSrc = false
 
         useLocalMaven = {
             return compileMatrixWithSrc ?: properties?.compileWithSrc ?: false

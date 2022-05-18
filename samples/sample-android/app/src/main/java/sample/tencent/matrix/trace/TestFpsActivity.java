@@ -22,20 +22,20 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.print.PrinterId;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.tencent.matrix.Matrix;
-import com.tencent.matrix.plugin.Plugin;
 import com.tencent.matrix.trace.TracePlugin;
 import com.tencent.matrix.trace.constants.Constants;
 import com.tencent.matrix.trace.listeners.IDoFrameListener;
+import com.tencent.matrix.trace.tracer.FrameTracer;
 import com.tencent.matrix.util.MatrixLog;
 
 import java.util.Random;
@@ -52,38 +52,40 @@ public class TestFpsActivity extends Activity {
     private static final String TAG = "Matrix.TestFpsActivity";
     private ListView mListView;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
-    private static HandlerThread sHandlerThread = new HandlerThread("test");
+    private FrameTracer frameTracerVar;
 
+
+
+    private static HandlerThread sHandlerThread = new HandlerThread("test");
     static {
         sHandlerThread.start();
     }
 
     private int count;
     private long time = System.currentTimeMillis();
-    private IDoFrameListener mDoFrameListener = new IDoFrameListener(new Executor() {
+    private Executor mExecutor = new Executor() {
         Handler handler = new Handler(sHandlerThread.getLooper());
-
         @Override
         public void execute(Runnable command) {
             handler.post(command);
         }
-    }) {
+    };
 
+    private IDoFrameListener mDoFrameListener = new IDoFrameListener(mExecutor) {
         @Override
         public void doFrameAsync(String focusedActivity, long startNs, long endNs, int dropFrame, boolean isVsyncFrame, long intendedFrameTimeNs, long inputCostNs, long animationCostNs, long traversalCostNs) {
             super.doFrameAsync(focusedActivity, startNs, endNs, dropFrame, isVsyncFrame, intendedFrameTimeNs, inputCostNs, animationCostNs, traversalCostNs);
-            MatrixLog.i(TAG, "[doFrameAsync]" + " costMs=" + (endNs - intendedFrameTimeNs) / Constants.TIME_MILLIS_TO_NANO
-                    + " dropFrame=" + dropFrame + " isVsyncFrame=" + isVsyncFrame + " offsetVsync=" + ((startNs - intendedFrameTimeNs) / Constants.TIME_MILLIS_TO_NANO) + " [%s:%s:%s]", inputCostNs, animationCostNs, traversalCostNs);
+            if ((endNs - intendedFrameTimeNs) / Constants.TIME_MILLIS_TO_NANO > 0) {
+                MatrixLog.i(TAG, "[doFrameAsync]" + " costMs=" + (endNs - intendedFrameTimeNs) / Constants.TIME_MILLIS_TO_NANO
+                        + " dropFrame=" + dropFrame + " isVsyncFrame=" + isVsyncFrame + " offsetVsync=" + ((startNs - intendedFrameTimeNs) / Constants.TIME_MILLIS_TO_NANO) + " [%s:%s:%s]", inputCostNs, animationCostNs, traversalCostNs);
+            }
         }
-
     };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.test_fps_layout);
-
         IssueFilter.setCurrentFilter(IssueFilter.ISSUE_TRACE);
 
 //        Matrix.with().getPluginByClass(TracePlugin.class).getFrameTracer().onStartTrace();
@@ -98,8 +100,8 @@ public class TestFpsActivity extends Activity {
         mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                MatrixLog.i(TAG, "onTouch=" + motionEvent);
-                SystemClock.sleep(80);
+                //                MatrixLog.i(TAG, "onTouch=" + motionEvent);
+//                SystemClock.sleep(80);
                 return false;
             }
         });
@@ -109,13 +111,6 @@ public class TestFpsActivity extends Activity {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//                mainHandler.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        int rand = random.nextInt(10);
-//                        SystemClock.sleep(rand * 4);
-//                    }
-//                });
                 return super.getView(position, convertView, parent);
             }
         });
